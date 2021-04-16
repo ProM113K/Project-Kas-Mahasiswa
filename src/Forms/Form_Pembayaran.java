@@ -33,7 +33,7 @@ public class Form_Pembayaran extends javax.swing.JFrame {
         TI.setVisible(false);
         KA.setVisible(false);
         AP.setVisible(false);
-        txtNominal.setEnabled(false);
+        radioNominal1.setEnabled(false);
         tblSaldo.setEnabled(false);
         
         try {
@@ -54,6 +54,7 @@ public class Form_Pembayaran extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         ListProdi = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -75,8 +76,8 @@ public class Form_Pembayaran extends javax.swing.JFrame {
         txtKelas = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        txtNominal = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        radioNominal1 = new javax.swing.JRadioButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -248,12 +249,15 @@ public class Form_Pembayaran extends javax.swing.JFrame {
         });
         jPanel1.add(jButton1);
         jButton1.setBounds(150, 130, 70, 28);
-        jPanel1.add(txtNominal);
-        txtNominal.setBounds(70, 130, 73, 28);
 
         jLabel4.setText("Nominal");
         jPanel1.add(jLabel4);
         jLabel4.setBounds(10, 130, 60, 30);
+
+        buttonGroup1.add(radioNominal1);
+        radioNominal1.setText("10000");
+        jPanel1.add(radioNominal1);
+        radioNominal1.setBounds(60, 130, 90, 30);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(360, 10, 230, 170);
@@ -316,7 +320,7 @@ public class Form_Pembayaran extends javax.swing.JFrame {
             txtNIM.setText(TableMhs.getModel().getValueAt(row, 0).toString());
             txtNama.setText(TableMhs.getModel().getValueAt(row, 1).toString());
             txtKelas.setText(TableMhs.getModel().getValueAt(row, 2).toString());
-            txtNominal.setEnabled(true);
+            radioNominal1.setEnabled(true);
         } else {
             JOptionPane.showMessageDialog(null, "Tidak dipilih");
         }
@@ -336,7 +340,7 @@ public class Form_Pembayaran extends javax.swing.JFrame {
                 PreparedStatement prpStat = conn.prepareStatement(query);
                 prpStat.setInt(1, 0);
                 prpStat.setString(2, txtNIM.getText());
-                prpStat.setInt(3, Integer.parseInt(txtNominal.getText()));
+                prpStat.setInt(3, Integer.parseInt(radioNominal1.getText()));
                 prpStat.setDate(4, startDate);
                 
                 prpStat.execute();
@@ -346,8 +350,8 @@ public class Form_Pembayaran extends javax.swing.JFrame {
             txtNIM.setText("");
             txtNama.setText("");
             txtKelas.setText("");
-            txtNominal.setText("");
-            txtNominal.setEnabled(false);
+            buttonGroup1.clearSelection();
+            radioNominal1.setEnabled(false);
         } catch (SQLException e) {
             System.err.print("Got an exception!");
             System.err.println(e.getMessage());
@@ -442,6 +446,7 @@ public class Form_Pembayaran extends javax.swing.JFrame {
     private javax.swing.JList<String> TI;
     private javax.swing.JTable TableMhs;
     private javax.swing.JButton btnSaldo;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -457,10 +462,10 @@ public class Form_Pembayaran extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JRadioButton radioNominal1;
     private javax.swing.JTable tblSaldo;
     private javax.swing.JTextField txtKelas;
     private javax.swing.JTextField txtNIM;
     private javax.swing.JTextField txtNama;
-    private javax.swing.JTextField txtNominal;
     // End of variables declaration//GEN-END:variables
 }
