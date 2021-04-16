@@ -117,15 +117,25 @@ public class Form_Pembayaran extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        KA.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                KAMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(KA);
 
         getContentPane().add(jScrollPane3);
         jScrollPane3.setBounds(230, 10, 60, 70);
 
         AP.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "AP 112", "AP 113", "AP 115" };
+            String[] strings = { "AP 213", "AP 214", "AP 215" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
+        });
+        AP.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                APMouseClicked(evt);
+            }
         });
         jScrollPane4.setViewportView(AP);
 
@@ -357,6 +367,39 @@ public class Form_Pembayaran extends javax.swing.JFrame {
         new Menu().setVisible(true);
         dispose();
     }//GEN-LAST:event_jMenu2MouseClicked
+
+    private void KAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_KAMouseClicked
+        String index = (String) KA.getSelectedValue();
+        if (index.equals("KA 223")) {
+            try {
+                Connection MySQL = Koneksi.Connect("kas_mhs");
+                ResultSet R = MySQL.createStatement().executeQuery("SELECT * FROM mahasiswa WHERE kelas = 'KA-223'");
+                TableMhs.setModel(DbUtils.resultSetToTableModel(R));
+            } catch (SQLException e) {
+                System.out.println("Failed To Load :" + e.toString());
+
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Yang lain");
+        }
+    }//GEN-LAST:event_KAMouseClicked
+
+    private void APMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_APMouseClicked
+        String index = (String) AP.getSelectedValue();
+        if (index.equals("AP 213")) {
+            try {
+                Connection MySQL = Koneksi.Connect("kas_mhs");
+                ResultSet R = MySQL.createStatement().executeQuery("SELECT * FROM mahasiswa WHERE kelas = 'AP-213'");
+                TableMhs.setModel(DbUtils.resultSetToTableModel(R));
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Yang lain");
+
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Yang lain");
+
+        }
+    }//GEN-LAST:event_APMouseClicked
 
     /**
      * @param args the command line arguments
