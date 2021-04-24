@@ -1,5 +1,15 @@
 package Forms;
 
+import Connection.Koneksi;
+import Default.Menu;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -17,6 +27,14 @@ public class Form_Penarikan_Uang extends javax.swing.JFrame {
      */
     public Form_Penarikan_Uang() {
         initComponents();
+        
+        try {
+            Connection MySQL = Koneksi.Connect("kas_mhs");
+            ResultSet R = MySQL.createStatement().executeQuery("SELECT SUM(nominal) AS SALDO FROM saldo");
+            tblSaldo.setModel(DbUtils.resultSetToTableModel(R));
+        } catch (SQLException e) {
+            System.out.println("Failed To Load :" + e.toString());
+        }
     }
 
     /**
@@ -28,21 +46,133 @@ public class Form_Penarikan_Uang extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtPerihal = new javax.swing.JTextField();
+        txtNominal = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblSaldo = new javax.swing.JTable();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(java.awt.Color.lightGray);
+        getContentPane().setLayout(null);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        pack();
+        jLabel2.setText("Perihal");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, 30));
+
+        jLabel3.setText("Nominal");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, 30));
+        jPanel1.add(txtPerihal, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, 140, -1));
+        jPanel1.add(txtNominal, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 140, -1));
+
+        jButton1.setText("Tarik");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 150, -1, -1));
+
+        jButton2.setText("Kembali");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, -1, -1));
+
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(10, 60, 300, 190);
+
+        jPanel2.setBackground(java.awt.Color.orange);
+        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel1.setText("PENARIKAN UANG");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, -1, -1));
+
+        getContentPane().add(jPanel2);
+        jPanel2.setBounds(10, 10, 300, 40);
+
+        tblSaldo.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null}
+            },
+            new String [] {
+                "SALDO"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblSaldo);
+        if (tblSaldo.getColumnModel().getColumnCount() > 0) {
+            tblSaldo.getColumnModel().getColumn(0).setResizable(false);
+        }
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(10, 250, 300, 50);
+
+        setSize(new java.awt.Dimension(332, 337));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            String myDriver = "com.mysql.cj.jdbc.Driver";
+            String myUrl = "jdbc:mysql://localhost:3306/" + "kas_mhs";
+            Class.forName(myDriver);
+            
+            try (Connection conn = DriverManager.getConnection(myUrl, "root", "")) {
+                String query = "INSERT INTO `penarikan`(`id_tarik`, `peruntukan`, `nominal`, `tgl_penarikan`) VALUES (?,?,?,NOW())";
+                
+                PreparedStatement prpStat = conn.prepareStatement(query);
+                prpStat.setInt(1, 0);
+                prpStat.setString(2, txtPerihal.getText());
+                prpStat.setInt(3, Integer.parseInt(txtNominal.getText()));
+                
+                prpStat.execute();
+                JOptionPane.showMessageDialog(null, "Penarikan Berhasil");
+            } catch (Exception e) {
+                System.err.print("Got an exception!");
+                System.err.println(e.getMessage());
+            }
+        } catch (ClassNotFoundException e) {
+            System.err.print("Got an exception!");
+            System.err.println(e.getMessage());
+        }
+        
+        txtPerihal.setText("");
+        txtNominal.setText("");
+        
+        try {
+            Connection MySQL = Koneksi.Connect("kas_mhs");
+            ResultSet R = MySQL.createStatement().executeQuery("SELECT SUM(nominal) AS SALDO FROM saldo");
+            tblSaldo.setModel(DbUtils.resultSetToTableModel(R));
+        } catch (SQLException e) {
+            System.out.println("Failed To Load :" + e.toString());
+
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        new Menu().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -60,25 +190,30 @@ public class Form_Penarikan_Uang extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Form_Penarikan_Uang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Form_Penarikan_Uang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Form_Penarikan_Uang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Form_Penarikan_Uang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
+        //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Form_Penarikan_Uang().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Form_Penarikan_Uang().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblSaldo;
+    private javax.swing.JTextField txtNominal;
+    private javax.swing.JTextField txtPerihal;
     // End of variables declaration//GEN-END:variables
 }

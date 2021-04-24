@@ -4,7 +4,6 @@ import Default.Menu;
 import Connection.Koneksi;
 import java.sql.Connection;
 import java.sql.*;
-import java.util.Calendar;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -38,7 +37,7 @@ public class Form_Pembayaran extends javax.swing.JFrame {
         
         try {
             Connection MySQL = Koneksi.Connect("kas_mhs");
-            ResultSet R = MySQL.createStatement().executeQuery("SELECT SUM(nominal) AS SALDO FROM bayar");
+            ResultSet R = MySQL.createStatement().executeQuery("SELECT SUM(nominal) AS SALDO FROM saldo");
             tblSaldo.setModel(DbUtils.resultSetToTableModel(R));
         } catch (SQLException e) {
             System.out.println("Failed To Load :" + e.toString());
@@ -65,9 +64,6 @@ public class Form_Pembayaran extends javax.swing.JFrame {
         AP = new javax.swing.JList<>();
         jScrollPane5 = new javax.swing.JScrollPane();
         TableMhs = new javax.swing.JTable();
-        btnSaldo = new javax.swing.JButton();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        tblSaldo = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtNIM = new javax.swing.JTextField();
@@ -78,6 +74,10 @@ public class Form_Pembayaran extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         radioNominal1 = new javax.swing.JRadioButton();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tblSaldo = new javax.swing.JTable();
+        btnSaldo = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -151,7 +151,6 @@ public class Form_Pembayaran extends javax.swing.JFrame {
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
-                {null, null, null},
                 {null, null, null}
             },
             new String [] {
@@ -179,42 +178,9 @@ public class Form_Pembayaran extends javax.swing.JFrame {
         }
 
         getContentPane().add(jScrollPane5);
-        jScrollPane5.setBounds(6, 126, 340, 142);
+        jScrollPane5.setBounds(6, 126, 340, 160);
 
-        btnSaldo.setText("CEK SALDO");
-        btnSaldo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaldoActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnSaldo);
-        btnSaldo.setBounds(360, 240, 110, 28);
-
-        tblSaldo.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "SALDO"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane6.setViewportView(tblSaldo);
-        if (tblSaldo.getColumnModel().getColumnCount() > 0) {
-            tblSaldo.getColumnModel().getColumn(0).setResizable(false);
-        }
-
-        getContentPane().add(jScrollPane6);
-        jScrollPane6.setBounds(360, 190, 88, 40);
-
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.setLayout(null);
 
         jLabel1.setText("NIM");
@@ -263,6 +229,43 @@ public class Form_Pembayaran extends javax.swing.JFrame {
         getContentPane().add(jPanel1);
         jPanel1.setBounds(360, 10, 230, 170);
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tblSaldo.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "SALDO"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane6.setViewportView(tblSaldo);
+        if (tblSaldo.getColumnModel().getColumnCount() > 0) {
+            tblSaldo.getColumnModel().getColumn(0).setResizable(false);
+        }
+
+        jPanel2.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 100, 40));
+
+        btnSaldo.setText("CEK");
+        btnSaldo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaldoActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnSaldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 60, -1));
+
+        getContentPane().add(jPanel2);
+        jPanel2.setBounds(420, 190, 120, 100);
+
         jMenu1.setText("Menu");
 
         jMenuItem1.setText("About");
@@ -285,7 +288,7 @@ public class Form_Pembayaran extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
-        setSize(new java.awt.Dimension(618, 338));
+        setSize(new java.awt.Dimension(618, 363));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -342,16 +345,12 @@ public class Form_Pembayaran extends javax.swing.JFrame {
             String myUrl = "jdbc:mysql://localhost:3306/" + "kas_mhs";
             Class.forName(myDriver);
             try (Connection conn = DriverManager.getConnection(myUrl, "root", "")) {
-                Calendar calendar = Calendar.getInstance();
-                java.sql.Date startDate = new java.sql.Date(calendar.getTime().getTime());
-                
-                String query = "INSERT INTO `bayar`(`id_bayar`, `nim`, `nominal`, `tgl_pembayaran`) VALUES (?,?,?,?)";
+                String query = "INSERT INTO `bayar`(`id_bayar`, `nim`, `nominal`, `tgl_pembayaran`) VALUES (?,?,?,NOW())";
                 
                 PreparedStatement prpStat = conn.prepareStatement(query);
                 prpStat.setInt(1, 0);
                 prpStat.setString(2, txtNIM.getText());
                 prpStat.setInt(3, Integer.parseInt(radioNominal1.getText()));
-                prpStat.setDate(4, startDate);
                 
                 prpStat.execute();
                 JOptionPane.showMessageDialog(null, "Pembayaran Sukses");
@@ -373,7 +372,7 @@ public class Form_Pembayaran extends javax.swing.JFrame {
     private void btnSaldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaldoActionPerformed
         try {
             Connection MySQL = Koneksi.Connect("kas_mhs");
-            ResultSet R = MySQL.createStatement().executeQuery("SELECT SUM(nominal) AS SALDO FROM bayar");
+            ResultSet R = MySQL.createStatement().executeQuery("SELECT SUM(nominal) AS SALDO FROM saldo");
             tblSaldo.setModel(DbUtils.resultSetToTableModel(R));
         } catch (SQLException e) {
             System.err.println("Tidak ada saldo");
@@ -473,6 +472,7 @@ public class Form_Pembayaran extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
