@@ -25,13 +25,20 @@ public class Form_Penarikan_Uang extends javax.swing.JFrame {
     /**
      * Creates new form Form_Penarikan_Uang
      */
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public Form_Penarikan_Uang() {
         initComponents();
+        setTitle("Menu Penarikan");
         
         try {
             Connection MySQL = Koneksi.Connect("kas_mhs");
             ResultSet R = MySQL.createStatement().executeQuery("SELECT SUM(nominal) AS SALDO FROM saldo");
             tblSaldo.setModel(DbUtils.resultSetToTableModel(R));
+            String saldo = null;
+            while (R.next()) {
+                saldo = R.getString("SALDO");
+            }
+            System.out.println(saldo);
         } catch (SQLException e) {
             System.out.println("Failed To Load :" + e.toString());
         }
@@ -70,8 +77,14 @@ public class Form_Penarikan_Uang extends javax.swing.JFrame {
 
         jLabel3.setText("Nominal");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, 30));
-        jPanel1.add(txtPerihal, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, 140, -1));
-        jPanel1.add(txtNominal, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 140, -1));
+
+        txtPerihal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPerihalActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtPerihal, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, 150, -1));
+        jPanel1.add(txtNominal, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 150, -1));
 
         jButton1.setText("Tarik");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -132,6 +145,12 @@ public class Form_Penarikan_Uang extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int nominal = Integer.parseInt(txtNominal.getText());
+        
+        if (rootPaneCheckingEnabled) {
+            
+        } else {
+        }
         try {
             String myDriver = "com.mysql.cj.jdbc.Driver";
             String myUrl = "jdbc:mysql://localhost:3306/" + "kas_mhs";
@@ -173,6 +192,10 @@ public class Form_Penarikan_Uang extends javax.swing.JFrame {
         new Menu().setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtPerihalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPerihalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPerihalActionPerformed
 
     /**
      * @param args the command line arguments
