@@ -197,7 +197,7 @@ public class Form_Laporan_Penarikan extends javax.swing.JFrame {
             kalender.setTime(tgl);
             kalender.add(Calendar.DAY_OF_MONTH, -90);
             String tanggal=String.valueOf(format_date.format(kalender.getTime()));
-            String sql="SELECT peruntukan, nominal, tgl_penarikan FROM penarikan WHERE penarikan.tgl_penarikan >= '"+tanggal+"' && penarikan.tgl_penarikan <= '"+ambil_tgl+"' GROUP BY penarikan.tgl_penarikan DESC";
+            String sql="SELECT peruntukan, nominal, tgl_penarikan FROM penarikan WHERE penarikan.tgl_penarikan >= '"+tanggal+"' && penarikan.tgl_penarikan <= '"+ambil_tgl+"' ORDER BY penarikan.tgl_penarikan DESC";
             try {
             Connection MySQL = Koneksi.Connect("kas_mhs");
             ResultSet R = MySQL.createStatement().executeQuery(sql);
@@ -219,7 +219,7 @@ public class Form_Laporan_Penarikan extends javax.swing.JFrame {
             kalender.setTime(tgl);
             kalender.add(Calendar.DAY_OF_MONTH, -365);
             String tanggal=String.valueOf(format_date.format(kalender.getTime()));
-            String sql="SELECT peruntukan, nominal, tgl_penarikan FROM penarikan WHERE penarikan.tgl_penarikan >= '"+tanggal+"' && penarikan.tgl_penarikan <= '"+ambil_tgl+"' GROUP BY penarikan.tgl_penarikan DESC";
+            String sql="SELECT peruntukan, nominal, tgl_penarikan FROM penarikan WHERE penarikan.tgl_penarikan >= '"+tanggal+"' && penarikan.tgl_penarikan <= '"+ambil_tgl+"' ORDER BY penarikan.tgl_penarikan DESC";
             try {
             Connection MySQL = Koneksi.Connect("kas_mhs");
             ResultSet R = MySQL.createStatement().executeQuery(sql);

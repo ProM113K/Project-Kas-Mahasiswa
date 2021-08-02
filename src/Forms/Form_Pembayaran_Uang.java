@@ -385,6 +385,7 @@ public class Form_Pembayaran_Uang extends javax.swing.JFrame {
             txtKelas.setText("");
             buttonGroup1.clearSelection();
             txtNominal.setText("");
+            jList1.setEnabled(false);
             
             try {
             Connection MySQL = Koneksi.Connect("kas_mhs");

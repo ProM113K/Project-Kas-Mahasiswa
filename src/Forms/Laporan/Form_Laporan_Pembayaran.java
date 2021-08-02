@@ -200,7 +200,7 @@ public class Form_Laporan_Pembayaran extends javax.swing.JFrame {
             String sql="SELECT mahasiswa.nama, mahasiswa.kelas, bayar.nominal, "
                     + "bayar.tgl_pembayaran FROM bayar INNER JOIN mahasiswa "
                     + "ON mahasiswa.nim = bayar.nim "
-                    + "WHERE bayar.tgl_pembayaran >= '"+tanggal+"' && bayar.tgl_pembayaran <= '"+ambil_tgl+"' GROUP BY bayar.tgl_pembayaran DESC";
+                    + "WHERE bayar.tgl_pembayaran >= '"+tanggal+"' && bayar.tgl_pembayaran <= '"+ambil_tgl+"' ORDER BY bayar.tgl_pembayaran DESC";
             try {
             Connection MySQL = Koneksi.Connect("kas_mhs");
             ResultSet R = MySQL.createStatement().executeQuery(sql);
