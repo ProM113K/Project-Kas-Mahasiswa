@@ -32,7 +32,7 @@ public class Form_Pembayaran_Uang extends javax.swing.JFrame {
         TI.setVisible(false);
         KA.setVisible(false);
         AP.setVisible(false);
-        radioNominal1.setEnabled(false);
+        jList1.setEnabled(false);
         tblSaldo.setEnabled(false);
         
         try {
@@ -73,11 +73,13 @@ public class Form_Pembayaran_Uang extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        radioNominal1 = new javax.swing.JRadioButton();
+        txtNominal = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         tblSaldo = new javax.swing.JTable();
         btnSaldo = new javax.swing.JButton();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -190,11 +192,11 @@ public class Form_Pembayaran_Uang extends javax.swing.JFrame {
         txtNIM.setEditable(false);
         txtNIM.setToolTipText("Nomor Induk Mahasiswa");
         jPanel1.add(txtNIM);
-        txtNIM.setBounds(50, 10, 170, 30);
+        txtNIM.setBounds(60, 10, 180, 30);
 
         txtNama.setEditable(false);
         jPanel1.add(txtNama);
-        txtNama.setBounds(50, 50, 170, 30);
+        txtNama.setBounds(60, 50, 180, 30);
 
         jLabel2.setText("Nama");
         jPanel1.add(jLabel2);
@@ -202,7 +204,7 @@ public class Form_Pembayaran_Uang extends javax.swing.JFrame {
 
         txtKelas.setEditable(false);
         jPanel1.add(txtKelas);
-        txtKelas.setBounds(50, 90, 170, 30);
+        txtKelas.setBounds(60, 90, 180, 30);
 
         jLabel3.setText("Kelas");
         jPanel1.add(jLabel3);
@@ -215,19 +217,18 @@ public class Form_Pembayaran_Uang extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton1);
-        jButton1.setBounds(150, 130, 70, 28);
+        jButton1.setBounds(170, 130, 70, 28);
 
         jLabel4.setText("Nominal");
         jPanel1.add(jLabel4);
         jLabel4.setBounds(10, 130, 60, 30);
 
-        buttonGroup1.add(radioNominal1);
-        radioNominal1.setText("10000");
-        jPanel1.add(radioNominal1);
-        radioNominal1.setBounds(60, 130, 90, 30);
+        txtNominal.setEditable(false);
+        jPanel1.add(txtNominal);
+        txtNominal.setBounds(60, 130, 90, 28);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(360, 10, 230, 170);
+        jPanel1.setBounds(360, 10, 250, 170);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -264,7 +265,22 @@ public class Form_Pembayaran_Uang extends javax.swing.JFrame {
         jPanel2.add(btnSaldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 60, -1));
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(420, 190, 120, 100);
+        jPanel2.setBounds(450, 190, 120, 100);
+
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "5000", "10000", "15000", "20000" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jList1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jList1MouseClicked(evt);
+            }
+        });
+        jScrollPane7.setViewportView(jList1);
+
+        getContentPane().add(jScrollPane7);
+        jScrollPane7.setBounds(360, 190, 51, 90);
 
         jMenu1.setText("Menu");
 
@@ -288,7 +304,7 @@ public class Form_Pembayaran_Uang extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
-        setSize(new java.awt.Dimension(618, 363));
+        setSize(new java.awt.Dimension(644, 363));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -333,7 +349,8 @@ public class Form_Pembayaran_Uang extends javax.swing.JFrame {
             txtNIM.setText(TableMhs.getModel().getValueAt(row, 0).toString());
             txtNama.setText(TableMhs.getModel().getValueAt(row, 1).toString());
             txtKelas.setText(TableMhs.getModel().getValueAt(row, 2).toString());
-            radioNominal1.setEnabled(true);
+            txtNominal.setText("0");
+            jList1.setEnabled(true);
         } else {
             JOptionPane.showMessageDialog(null, "Tidak dipilih");
         }
@@ -341,7 +358,7 @@ public class Form_Pembayaran_Uang extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (txtNIM.getText().equals("") || txtNama.getText().equals("") || txtKelas.getText().equals("")
-                || !radioNominal1.isSelected()) {
+                || txtNominal.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Data harus diisi");
         } else {
             try {
@@ -354,7 +371,7 @@ public class Form_Pembayaran_Uang extends javax.swing.JFrame {
                 PreparedStatement prpStat = conn.prepareStatement(query);
                 prpStat.setInt(1, 0);
                 prpStat.setString(2, txtNIM.getText());
-                prpStat.setInt(3, Integer.parseInt(radioNominal1.getText()));
+                prpStat.setInt(3, Integer.parseInt(txtNominal.getText()));
                 
                 prpStat.execute();
                 JOptionPane.showMessageDialog(null, "Pembayaran Sukses");
@@ -364,7 +381,7 @@ public class Form_Pembayaran_Uang extends javax.swing.JFrame {
             txtNama.setText("");
             txtKelas.setText("");
             buttonGroup1.clearSelection();
-            radioNominal1.setEnabled(false);
+            txtNominal.setText("");
             
             try {
             Connection MySQL = Koneksi.Connect("kas_mhs");
@@ -436,6 +453,11 @@ public class Form_Pembayaran_Uang extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
+        System.out.println(jList1.getSelectedValue());
+        txtNominal.setText(jList1.getSelectedValue());
+    }//GEN-LAST:event_jList1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -482,6 +504,7 @@ public class Form_Pembayaran_Uang extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -494,10 +517,11 @@ public class Form_Pembayaran_Uang extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JRadioButton radioNominal1;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTable tblSaldo;
     private javax.swing.JTextField txtKelas;
     private javax.swing.JTextField txtNIM;
     private javax.swing.JTextField txtNama;
+    private javax.swing.JTextField txtNominal;
     // End of variables declaration//GEN-END:variables
 }
