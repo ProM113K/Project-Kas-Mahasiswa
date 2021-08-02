@@ -33,6 +33,7 @@ public class Form_Laporan_Pembayaran extends javax.swing.JFrame {
     public Form_Laporan_Pembayaran() {
         initComponents();
         setTitle("Laporan Pembayaran");
+        jTable1.setEnabled(false);
         delay();
     }
     
@@ -158,8 +159,8 @@ public class Form_Laporan_Pembayaran extends javax.swing.JFrame {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createSequentialGroup()
                             .addGap(82, 82, 82)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(34, 34, 34)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(26, 26, 26)
                             .addComponent(jButton2))
                         .addGroup(layout.createSequentialGroup()
                             .addGap(124, 124, 124)

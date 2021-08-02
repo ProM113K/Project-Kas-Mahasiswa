@@ -29,6 +29,7 @@ public class Form_Penarikan_Uang extends javax.swing.JFrame {
     public Form_Penarikan_Uang() {
         initComponents();
         setTitle("Menu Penarikan");
+        tblSaldo.setEnabled(false);
         
         try {
             Connection MySQL = Koneksi.Connect("kas_mhs");

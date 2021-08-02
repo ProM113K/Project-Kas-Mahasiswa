@@ -33,6 +33,7 @@ public class Form_Laporan_Penarikan extends javax.swing.JFrame {
     public Form_Laporan_Penarikan() {
         initComponents();
         setTitle("Laporan Pembayaran");
+        jTable1.setEnabled(false);
         delay();
     }
     

@@ -34,6 +34,7 @@ public class Form_Pembayaran_Uang extends javax.swing.JFrame {
         AP.setVisible(false);
         jList1.setEnabled(false);
         tblSaldo.setEnabled(false);
+        TableMhs.setVisible(false);
         
         try {
             Connection MySQL = Koneksi.Connect("kas_mhs");
@@ -329,6 +330,7 @@ public class Form_Pembayaran_Uang extends javax.swing.JFrame {
         String index = (String) TI.getSelectedValue();
         
         if (index.equals("TI 413")) {
+            TableMhs.setVisible(true);
             try {
                 Connection MySQL = Koneksi.Connect("kas_mhs");
                 ResultSet R = MySQL.createStatement().executeQuery("SELECT * FROM mahasiswa WHERE kelas = 'TI-413'");
@@ -338,6 +340,7 @@ public class Form_Pembayaran_Uang extends javax.swing.JFrame {
             }
         } else {
             JOptionPane.showMessageDialog(null, "Coming Soon");
+            TableMhs.setVisible(false);
         }
     }//GEN-LAST:event_TIMouseClicked
 
@@ -358,7 +361,7 @@ public class Form_Pembayaran_Uang extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (txtNIM.getText().equals("") || txtNama.getText().equals("") || txtKelas.getText().equals("")
-                || txtNominal.getText().equals("")) {
+                || txtNominal.getText().equals("") || txtNominal.getText().equals("0")) {
             JOptionPane.showMessageDialog(null, "Data harus diisi");
         } else {
             try {
@@ -417,6 +420,7 @@ public class Form_Pembayaran_Uang extends javax.swing.JFrame {
     private void KAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_KAMouseClicked
         String index = (String) KA.getSelectedValue();
         if (index.equals("KA 223")) {
+            TableMhs.setVisible(true);
             try {
                 Connection MySQL = Koneksi.Connect("kas_mhs");
                 ResultSet R = MySQL.createStatement().executeQuery("SELECT * FROM mahasiswa WHERE kelas = 'KA-223'");
@@ -427,12 +431,14 @@ public class Form_Pembayaran_Uang extends javax.swing.JFrame {
             }
         } else {
             JOptionPane.showMessageDialog(null, "Coming soon");
+            TableMhs.setVisible(false);
         }
     }//GEN-LAST:event_KAMouseClicked
 
     private void APMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_APMouseClicked
         String index = (String) AP.getSelectedValue();
         if (index.equals("AP 213")) {
+            TableMhs.setVisible(true);
             try {
                 Connection MySQL = Koneksi.Connect("kas_mhs");
                 ResultSet R = MySQL.createStatement().executeQuery("SELECT * FROM mahasiswa WHERE kelas = 'AP-213'");
@@ -443,7 +449,7 @@ public class Form_Pembayaran_Uang extends javax.swing.JFrame {
             }
         } else {
             JOptionPane.showMessageDialog(null, "Coming soon");
-
+            TableMhs.setVisible(false);
         }
     }//GEN-LAST:event_APMouseClicked
 
@@ -454,7 +460,6 @@ public class Form_Pembayaran_Uang extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
-        System.out.println(jList1.getSelectedValue());
         txtNominal.setText(jList1.getSelectedValue());
     }//GEN-LAST:event_jList1MouseClicked
 
