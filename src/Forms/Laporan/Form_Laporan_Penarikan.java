@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Forms;
+package Forms.Laporan;
 
 import Connection.Koneksi;
 import Default.Menu;
+import Default.Menu_Laporan;
 import static java.lang.Thread.sleep;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -157,8 +158,8 @@ public class Form_Laporan_Penarikan extends javax.swing.JFrame {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createSequentialGroup()
                             .addGap(82, 82, 82)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(34, 34, 34)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
                             .addComponent(jButton2))
                         .addGroup(layout.createSequentialGroup()
                             .addGap(124, 124, 124)
@@ -203,7 +204,6 @@ public class Form_Laporan_Penarikan extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.out.println("Failed To Load :" + e.toString());
         }
-            System.out.println(sql);
         } catch (ParseException e) {
             System.out.println("Failed To Load :" + e.toString());
         }
@@ -226,7 +226,6 @@ public class Form_Laporan_Penarikan extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.out.println("Failed To Load :" + e.toString());
         }
-            System.out.println(sql);
         } catch (ParseException e) {
             System.out.println("Failed To Load :" + e.toString());
         }
@@ -237,7 +236,7 @@ public class Form_Laporan_Penarikan extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu2ActionPerformed
 
     private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
-        new Menu().setVisible(true);
+        new Menu_Laporan().setVisible(true);
         dispose();
     }//GEN-LAST:event_jMenu2MouseClicked
 

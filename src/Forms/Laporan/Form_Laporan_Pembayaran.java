@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Forms;
+package Forms.Laporan;
 
 import Connection.Koneksi;
 import Default.Menu;
+import Default.Menu_Laporan;
 import static java.lang.Thread.sleep;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -206,7 +207,6 @@ public class Form_Laporan_Pembayaran extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.out.println("Failed To Load :" + e.toString());
         }
-            System.out.println(sql);
         } catch (ParseException e) {
             System.out.println("Failed To Load :" + e.toString());
         }
@@ -232,7 +232,6 @@ public class Form_Laporan_Pembayaran extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.out.println("Failed To Load :" + e.toString());
         }
-            System.out.println(sql);
         } catch (ParseException e) {
             System.out.println("Failed To Load :" + e.toString());
         }
@@ -243,7 +242,7 @@ public class Form_Laporan_Pembayaran extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu2ActionPerformed
 
     private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
-        new Menu().setVisible(true);
+        new Menu_Laporan().setVisible(true);
         dispose();
     }//GEN-LAST:event_jMenu2MouseClicked
 

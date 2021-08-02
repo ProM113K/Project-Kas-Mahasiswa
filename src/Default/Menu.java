@@ -2,7 +2,7 @@ package Default;
 
 
 import Forms.Form_Penarikan_Uang;
-import Forms.Form_Pembayaran;
+import Forms.Form_Pembayaran_Uang;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -21,6 +21,7 @@ public class Menu extends javax.swing.JFrame {
      */
     public Menu() {
         initComponents();
+        setTitle("Kas Mahasiswa");
     }
 
     /**
@@ -114,7 +115,7 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new Form_Pembayaran().setVisible(true);
+        new Form_Pembayaran_Uang().setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

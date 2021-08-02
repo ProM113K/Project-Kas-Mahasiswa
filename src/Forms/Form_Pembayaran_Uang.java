@@ -22,12 +22,12 @@ import net.proteanit.sql.DbUtils;
  *
  * @author DIMAS
  */
-public class Form_Pembayaran extends javax.swing.JFrame {
+public class Form_Pembayaran_Uang extends javax.swing.JFrame {
 
     /**
      * Creates new form Menu
      */
-    public Form_Pembayaran() {
+    public Form_Pembayaran_Uang() {
         initComponents();
         TI.setVisible(false);
         KA.setVisible(false);
@@ -321,7 +321,7 @@ public class Form_Pembayaran extends javax.swing.JFrame {
                 System.out.println("Failed To Load :" + e.toString());
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Yang lain");
+            JOptionPane.showMessageDialog(null, "Coming Soon");
         }
     }//GEN-LAST:event_TIMouseClicked
 
@@ -340,7 +340,11 @@ public class Form_Pembayaran extends javax.swing.JFrame {
     }//GEN-LAST:event_TableMhsMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
+        if (txtNIM.getText().equals("") || txtNama.getText().equals("") || txtKelas.getText().equals("")
+                || !radioNominal1.isSelected()) {
+            JOptionPane.showMessageDialog(null, "Data harus diisi");
+        } else {
+            try {
             String myDriver = "com.mysql.cj.jdbc.Driver";
             String myUrl = "jdbc:mysql://localhost:3306/" + "kas_mhs";
             Class.forName(myDriver);
@@ -361,11 +365,20 @@ public class Form_Pembayaran extends javax.swing.JFrame {
             txtKelas.setText("");
             buttonGroup1.clearSelection();
             radioNominal1.setEnabled(false);
+            
+            try {
+            Connection MySQL = Koneksi.Connect("kas_mhs");
+            ResultSet R = MySQL.createStatement().executeQuery("SELECT SUM(nominal) AS SALDO FROM saldo");
+            tblSaldo.setModel(DbUtils.resultSetToTableModel(R));
+        } catch (SQLException e) {
+            System.err.println("Tidak ada saldo");
+        }
         } catch (SQLException e) {
             System.err.print("Got an exception!");
             System.err.println(e.getMessage());
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Form_Pembayaran.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Form_Pembayaran_Uang.class.getName()).log(Level.SEVERE, null, ex);
+        }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -396,7 +409,7 @@ public class Form_Pembayaran extends javax.swing.JFrame {
 
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Yang lain");
+            JOptionPane.showMessageDialog(null, "Coming soon");
         }
     }//GEN-LAST:event_KAMouseClicked
 
@@ -408,11 +421,11 @@ public class Form_Pembayaran extends javax.swing.JFrame {
                 ResultSet R = MySQL.createStatement().executeQuery("SELECT * FROM mahasiswa WHERE kelas = 'AP-213'");
                 TableMhs.setModel(DbUtils.resultSetToTableModel(R));
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Yang lain");
+                JOptionPane.showMessageDialog(null, "Coming soon");
 
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Yang lain");
+            JOptionPane.showMessageDialog(null, "Coming soon");
 
         }
     }//GEN-LAST:event_APMouseClicked
@@ -440,8 +453,10 @@ public class Form_Pembayaran extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Form_Pembayaran.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Form_Pembayaran_Uang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         
@@ -450,7 +465,7 @@ public class Form_Pembayaran extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new Form_Pembayaran().setVisible(true);
+            new Form_Pembayaran_Uang().setVisible(true);
         });
     }
 

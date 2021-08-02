@@ -145,13 +145,10 @@ public class Form_Penarikan_Uang extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int nominal = Integer.parseInt(txtNominal.getText());
-        
-        if (rootPaneCheckingEnabled) {
-            
+        if (txtPerihal.getText().equals("") || txtNominal.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Data harus diisi");
         } else {
-        }
-        try {
+            try {
             String myDriver = "com.mysql.cj.jdbc.Driver";
             String myUrl = "jdbc:mysql://localhost:3306/" + "kas_mhs";
             Class.forName(myDriver);
@@ -185,6 +182,7 @@ public class Form_Penarikan_Uang extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.out.println("Failed To Load :" + e.toString());
 
+        }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
