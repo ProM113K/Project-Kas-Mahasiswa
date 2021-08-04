@@ -310,6 +310,15 @@ public class Form_Pembayaran_Uang extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ListProdiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListProdiMouseClicked
+        TableMhs.setVisible(false);
+        
+        txtNIM.setText("");
+        txtNama.setText("");
+        txtKelas.setText("");
+        buttonGroup1.clearSelection();
+        txtNominal.setText("");
+        jList1.setEnabled(false);
+            
         String index = (String) ListProdi.getSelectedValue();
         if (index.equals("Teknik Informatika")) {
             TI.setVisible(true);
@@ -342,6 +351,8 @@ public class Form_Pembayaran_Uang extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Coming Soon");
             TableMhs.setVisible(false);
         }
+        
+        jList1.setEnabled(false);
     }//GEN-LAST:event_TIMouseClicked
 
     private void TableMhsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableMhsMouseClicked
@@ -434,6 +445,7 @@ public class Form_Pembayaran_Uang extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Coming soon");
             TableMhs.setVisible(false);
         }
+        jList1.setEnabled(false);
     }//GEN-LAST:event_KAMouseClicked
 
     private void APMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_APMouseClicked
@@ -452,6 +464,7 @@ public class Form_Pembayaran_Uang extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Coming soon");
             TableMhs.setVisible(false);
         }
+        jList1.setEnabled(false);
     }//GEN-LAST:event_APMouseClicked
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed

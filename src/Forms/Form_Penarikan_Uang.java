@@ -35,11 +35,6 @@ public class Form_Penarikan_Uang extends javax.swing.JFrame {
             Connection MySQL = Koneksi.Connect("kas_mhs");
             ResultSet R = MySQL.createStatement().executeQuery("SELECT SUM(nominal) AS SALDO FROM saldo");
             tblSaldo.setModel(DbUtils.resultSetToTableModel(R));
-            String saldo = null;
-            while (R.next()) {
-                saldo = R.getString("SALDO");
-            }
-            System.out.println(saldo);
         } catch (SQLException e) {
             System.out.println("Failed To Load :" + e.toString());
         }
@@ -146,8 +141,11 @@ public class Form_Penarikan_Uang extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (txtPerihal.getText().equals("") || txtNominal.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Data harus diisi");
+        String saldo = tblSaldo.getModel().getValueAt(0, 0).toString();
+        System.out.println(saldo);
+        
+        if (txtPerihal.getText().equals("") || txtNominal.getText().equals("") || Integer.parseInt(saldo) < Integer.parseInt(txtNominal.getText())) {
+            JOptionPane.showMessageDialog(null, "Data kurang atau Saldo tidak mencukupi");
         } else {
             try {
             String myDriver = "com.mysql.cj.jdbc.Driver";
