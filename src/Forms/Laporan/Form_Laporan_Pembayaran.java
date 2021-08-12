@@ -36,24 +36,25 @@ public class Form_Laporan_Pembayaran extends javax.swing.JFrame {
         jTable1.setEnabled(false);
         delay();
     }
-    
-    public void delay(){
-    Thread clock=new Thread(){
-        public void run(){
-            for(;;){
-                Calendar cal=Calendar.getInstance();
-                SimpleDateFormat format=new SimpleDateFormat("HH:mm:ss");
-                SimpleDateFormat format2=new SimpleDateFormat("yyyy-MM-dd");
-                jTextField2.setText(format.format(cal.getTime()));
-                 jTextField1.setText(format2.format(cal.getTime()));                
-            try { sleep(1000);
-            } catch (InterruptedException ex) {
-                System.out.println("Failed To Load :" + ex.toString());
+
+    public void delay() {
+        Thread clock = new Thread() {
+            public void run() {
+                for (;;) {
+                    Calendar cal = Calendar.getInstance();
+                    SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+                    SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
+                    jTextField2.setText(format.format(cal.getTime()));
+                    jTextField1.setText(format2.format(cal.getTime()));
+                    try {
+                        sleep(1000);
+                    } catch (InterruptedException ex) {
+                        System.out.println("Failed To Load :" + ex.toString());
+                    }
+                }
             }
-          }
-        }
-      };
-    clock.start();
+        };
+        clock.start();
     }
 
     /**
@@ -72,7 +73,6 @@ public class Form_Laporan_Pembayaran extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
-        txtTotal = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -148,27 +148,28 @@ public class Form_Laporan_Pembayaran extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(82, 82, 82)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(26, 26, 26)
-                            .addComponent(jButton2))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(124, 124, 124)
-                            .addComponent(jLabel1))))
-                .addContainerGap(19, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(82, 82, 82)
+                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(26, 26, 26)
+                                        .addComponent(jButton2))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(124, 124, 124)
+                                        .addComponent(jLabel1)))
+                                .addGap(117, 117, 117)))
+                        .addGap(0, 43, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,34 +185,35 @@ public class Form_Laporan_Pembayaran extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            SimpleDateFormat format_date=new SimpleDateFormat("yyyy-MM-dd");   
-            String ambil_tgl=jTextField1.getText();
+            SimpleDateFormat format_date = new SimpleDateFormat("yyyy-MM-dd");
+            String ambil_tgl = jTextField1.getText();
+            String ambil_waktu = jTextField2.getText();
             Date tgl = format_date.parse(ambil_tgl);
-            Calendar kalender=Calendar.getInstance();
+            Calendar kalender = Calendar.getInstance();
             kalender.setTime(tgl);
             kalender.add(Calendar.DAY_OF_MONTH, -90);
-            String tanggal=String.valueOf(format_date.format(kalender.getTime()));
-            String sql="SELECT mahasiswa.nama, mahasiswa.kelas, bayar.nominal, "
+            String tanggal = String.valueOf(format_date.format(kalender.getTime()));
+            String sql = "SELECT mahasiswa.nama, mahasiswa.kelas, bayar.nominal, "
                     + "bayar.tgl_pembayaran FROM bayar INNER JOIN mahasiswa "
                     + "ON mahasiswa.nim = bayar.nim "
-                    + "WHERE bayar.tgl_pembayaran >= '"+tanggal+"' && bayar.tgl_pembayaran <= '"+ambil_tgl+"' ORDER BY bayar.tgl_pembayaran DESC";
+                    + "WHERE bayar.tgl_pembayaran >= '" + tanggal + " 00:00:00' && bayar.tgl_pembayaran <= '" + ambil_tgl + " " + ambil_waktu + "' ORDER BY bayar.tgl_pembayaran DESC";
+            System.out.println(sql);
             try {
-            Connection MySQL = Koneksi.Connect("kas_mhs");
-            ResultSet R = MySQL.createStatement().executeQuery(sql);
-            jTable1.setModel(DbUtils.resultSetToTableModel(R));
-        } catch (SQLException e) {
-            System.out.println("Failed To Load :" + e.toString());
-        }
+                Connection MySQL = Koneksi.Connect("kas_mhs");
+                ResultSet R = MySQL.createStatement().executeQuery(sql);
+                jTable1.setModel(DbUtils.resultSetToTableModel(R));
+            } catch (SQLException e) {
+                System.out.println("Failed To Load :" + e.toString());
+            }
         } catch (ParseException e) {
             System.out.println("Failed To Load :" + e.toString());
         }
@@ -219,31 +221,31 @@ public class Form_Laporan_Pembayaran extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
-            SimpleDateFormat format_date=new SimpleDateFormat("yyyy-MM-dd");   
-            String ambil_tgl=jTextField1.getText();
+            SimpleDateFormat format_date = new SimpleDateFormat("yyyy-MM-dd");
+            String ambil_tgl = jTextField1.getText();
             Date tgl = format_date.parse(ambil_tgl);
-            Calendar kalender=Calendar.getInstance();
+            Calendar kalender = Calendar.getInstance();
             kalender.setTime(tgl);
             kalender.add(Calendar.DAY_OF_MONTH, -365);
-            String tanggal=String.valueOf(format_date.format(kalender.getTime()));
-            String sql="SELECT mahasiswa.nama, mahasiswa.kelas, bayar.nominal, "
+            String tanggal = String.valueOf(format_date.format(kalender.getTime()));
+            String sql = "SELECT mahasiswa.nama, mahasiswa.kelas, bayar.nominal, "
                     + "bayar.tgl_pembayaran FROM bayar INNER JOIN mahasiswa "
                     + "ON mahasiswa.nim = bayar.nim "
-                    + "WHERE bayar.tgl_pembayaran >= '"+tanggal+"' && bayar.tgl_pembayaran <= '"+ambil_tgl+"' ORDER BY bayar.tgl_pembayaran DESC";
+                    + "WHERE bayar.tgl_pembayaran >= '" + tanggal + "' && bayar.tgl_pembayaran <= '" + ambil_tgl + "' ORDER BY bayar.tgl_pembayaran DESC";
             try {
-            Connection MySQL = Koneksi.Connect("kas_mhs");
-            ResultSet R = MySQL.createStatement().executeQuery(sql);
-            jTable1.setModel(DbUtils.resultSetToTableModel(R));
-        } catch (SQLException e) {
-            System.out.println("Failed To Load :" + e.toString());
-        }
+                Connection MySQL = Koneksi.Connect("kas_mhs");
+                ResultSet R = MySQL.createStatement().executeQuery(sql);
+                jTable1.setModel(DbUtils.resultSetToTableModel(R));
+            } catch (SQLException e) {
+                System.out.println("Failed To Load :" + e.toString());
+            }
         } catch (ParseException e) {
             System.out.println("Failed To Load :" + e.toString());
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
-        
+
     }//GEN-LAST:event_jMenu2ActionPerformed
 
     private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
@@ -303,6 +305,5 @@ public class Form_Laporan_Pembayaran extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }

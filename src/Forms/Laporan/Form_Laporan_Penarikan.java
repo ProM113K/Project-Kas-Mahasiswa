@@ -6,7 +6,6 @@
 package Forms.Laporan;
 
 import Connection.Koneksi;
-import Default.Menu;
 import Default.Menu_Laporan;
 import static java.lang.Thread.sleep;
 import java.sql.Connection;
@@ -16,8 +15,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.proteanit.sql.DbUtils;
 
 /**
@@ -32,28 +29,29 @@ public class Form_Laporan_Penarikan extends javax.swing.JFrame {
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public Form_Laporan_Penarikan() {
         initComponents();
-        setTitle("Laporan Pembayaran");
+        setTitle("Laporan Penarikan");
         jTable1.setEnabled(false);
         delay();
     }
-    
-    public void delay(){
-    Thread clock=new Thread(){
-        public void run(){
-            for(;;){
-                Calendar cal=Calendar.getInstance();
-                SimpleDateFormat format=new SimpleDateFormat("HH:mm:ss");
-                SimpleDateFormat format2=new SimpleDateFormat("yyyy-MM-dd");
-                jTextField2.setText(format.format(cal.getTime()));
-                 jTextField1.setText(format2.format(cal.getTime()));                
-            try { sleep(1000);
-            } catch (InterruptedException ex) {
-                System.out.println("Failed To Load :" + ex.toString());
+
+    public void delay() {
+        Thread clock = new Thread() {
+            public void run() {
+                for (;;) {
+                    Calendar cal = Calendar.getInstance();
+                    SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+                    SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
+                    jTextField2.setText(format.format(cal.getTime()));
+                    jTextField1.setText(format2.format(cal.getTime()));
+                    try {
+                        sleep(1000);
+                    } catch (InterruptedException ex) {
+                        System.out.println("Failed To Load :" + ex.toString());
+                    }
+                }
             }
-          }
-        }
-      };
-    clock.start();
+        };
+        clock.start();
     }
 
     /**
@@ -190,21 +188,22 @@ public class Form_Laporan_Penarikan extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            SimpleDateFormat format_date=new SimpleDateFormat("yyyy-MM-dd");   
-            String ambil_tgl=jTextField1.getText();
+            SimpleDateFormat format_date = new SimpleDateFormat("yyyy-MM-dd");
+            String ambil_tgl = jTextField1.getText();
+            String ambil_waktu = jTextField2.getText();
             Date tgl = format_date.parse(ambil_tgl);
-            Calendar kalender=Calendar.getInstance();
+            Calendar kalender = Calendar.getInstance();
             kalender.setTime(tgl);
             kalender.add(Calendar.DAY_OF_MONTH, -90);
-            String tanggal=String.valueOf(format_date.format(kalender.getTime()));
-            String sql="SELECT peruntukan, nominal, tgl_penarikan FROM penarikan WHERE penarikan.tgl_penarikan >= '"+tanggal+"' && penarikan.tgl_penarikan <= '"+ambil_tgl+"' ORDER BY penarikan.tgl_penarikan DESC";
+            String tanggal = String.valueOf(format_date.format(kalender.getTime()));
+            String sql = "SELECT peruntukan, nominal, tgl_penarikan FROM penarikan WHERE penarikan.tgl_penarikan >= '" + tanggal + " 00:00:00' && penarikan.tgl_penarikan <= '" + ambil_tgl + " " + ambil_waktu + "' ORDER BY penarikan.tgl_penarikan DESC";
             try {
-            Connection MySQL = Koneksi.Connect("kas_mhs");
-            ResultSet R = MySQL.createStatement().executeQuery(sql);
-            jTable1.setModel(DbUtils.resultSetToTableModel(R));
-        } catch (SQLException e) {
-            System.out.println("Failed To Load :" + e.toString());
-        }
+                Connection MySQL = Koneksi.Connect("kas_mhs");
+                ResultSet R = MySQL.createStatement().executeQuery(sql);
+                jTable1.setModel(DbUtils.resultSetToTableModel(R));
+            } catch (SQLException e) {
+                System.out.println("Failed To Load :" + e.toString());
+            }
         } catch (ParseException e) {
             System.out.println("Failed To Load :" + e.toString());
         }
@@ -212,28 +211,28 @@ public class Form_Laporan_Penarikan extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
-            SimpleDateFormat format_date=new SimpleDateFormat("yyyy-MM-dd");   
-            String ambil_tgl=jTextField1.getText();
+            SimpleDateFormat format_date = new SimpleDateFormat("yyyy-MM-dd");
+            String ambil_tgl = jTextField1.getText();
             Date tgl = format_date.parse(ambil_tgl);
-            Calendar kalender=Calendar.getInstance();
+            Calendar kalender = Calendar.getInstance();
             kalender.setTime(tgl);
             kalender.add(Calendar.DAY_OF_MONTH, -365);
-            String tanggal=String.valueOf(format_date.format(kalender.getTime()));
-            String sql="SELECT peruntukan, nominal, tgl_penarikan FROM penarikan WHERE penarikan.tgl_penarikan >= '"+tanggal+"' && penarikan.tgl_penarikan <= '"+ambil_tgl+"' ORDER BY penarikan.tgl_penarikan DESC";
+            String tanggal = String.valueOf(format_date.format(kalender.getTime()));
+            String sql = "SELECT peruntukan, nominal, tgl_penarikan FROM penarikan WHERE penarikan.tgl_penarikan >= '" + tanggal + "' && penarikan.tgl_penarikan <= '" + ambil_tgl + "' ORDER BY penarikan.tgl_penarikan DESC";
             try {
-            Connection MySQL = Koneksi.Connect("kas_mhs");
-            ResultSet R = MySQL.createStatement().executeQuery(sql);
-            jTable1.setModel(DbUtils.resultSetToTableModel(R));
-        } catch (SQLException e) {
-            System.out.println("Failed To Load :" + e.toString());
-        }
+                Connection MySQL = Koneksi.Connect("kas_mhs");
+                ResultSet R = MySQL.createStatement().executeQuery(sql);
+                jTable1.setModel(DbUtils.resultSetToTableModel(R));
+            } catch (SQLException e) {
+                System.out.println("Failed To Load :" + e.toString());
+            }
         } catch (ParseException e) {
             System.out.println("Failed To Load :" + e.toString());
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
-        
+
     }//GEN-LAST:event_jMenu2ActionPerformed
 
     private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked

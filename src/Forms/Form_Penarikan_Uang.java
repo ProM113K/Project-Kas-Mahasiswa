@@ -15,7 +15,6 @@ import net.proteanit.sql.DbUtils;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author DIMAS
@@ -30,7 +29,7 @@ public class Form_Penarikan_Uang extends javax.swing.JFrame {
         initComponents();
         setTitle("Menu Penarikan");
         tblSaldo.setEnabled(false);
-        
+
         try {
             Connection MySQL = Koneksi.Connect("kas_mhs");
             ResultSet R = MySQL.createStatement().executeQuery("SELECT SUM(nominal) AS SALDO FROM saldo");
@@ -52,10 +51,10 @@ public class Form_Penarikan_Uang extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtPerihal = new javax.swing.JTextField();
         txtNominal = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        cmboPerihal = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -73,13 +72,6 @@ public class Form_Penarikan_Uang extends javax.swing.JFrame {
 
         jLabel3.setText("Nominal");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, 30));
-
-        txtPerihal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPerihalActionPerformed(evt);
-            }
-        });
-        jPanel1.add(txtPerihal, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, 150, -1));
         jPanel1.add(txtNominal, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 150, -1));
 
         jButton1.setText("Tarik");
@@ -97,6 +89,9 @@ public class Form_Penarikan_Uang extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, -1, -1));
+
+        cmboPerihal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Alat Tulis", "Pencetakan", "Event Mahasiswa", "Keperluan Kelas" }));
+        jPanel1.add(cmboPerihal, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 26, 150, 40));
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(10, 60, 300, 190);
@@ -143,45 +138,45 @@ public class Form_Penarikan_Uang extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String saldo = tblSaldo.getModel().getValueAt(0, 0).toString();
         System.out.println(saldo);
-        
-        if (txtPerihal.getText().equals("") || txtNominal.getText().equals("") || Integer.parseInt(saldo) < Integer.parseInt(txtNominal.getText())) {
+
+        if (cmboPerihal.getSelectedItem().equals(" ") || txtNominal.getText().equals("") || Integer.parseInt(saldo) < Integer.parseInt(txtNominal.getText())) {
             JOptionPane.showMessageDialog(null, "Data kurang atau Saldo tidak mencukupi");
         } else {
             try {
-            String myDriver = "com.mysql.cj.jdbc.Driver";
-            String myUrl = "jdbc:mysql://localhost:3306/" + "kas_mhs";
-            Class.forName(myDriver);
-            
-            try (Connection conn = DriverManager.getConnection(myUrl, "root", "")) {
-                String query = "INSERT INTO `penarikan`(`id_tarik`, `peruntukan`, `nominal`, `tgl_penarikan`) VALUES (?,?,?,NOW())";
-                
-                PreparedStatement prpStat = conn.prepareStatement(query);
-                prpStat.setInt(1, 0);
-                prpStat.setString(2, txtPerihal.getText());
-                prpStat.setInt(3, Integer.parseInt(txtNominal.getText()));
-                
-                prpStat.execute();
-                JOptionPane.showMessageDialog(null, "Penarikan Berhasil");
-            } catch (Exception e) {
+                String myDriver = "com.mysql.cj.jdbc.Driver";
+                String myUrl = "jdbc:mysql://localhost:3306/" + "kas_mhs";
+                Class.forName(myDriver);
+
+                try (Connection conn = DriverManager.getConnection(myUrl, "root", "")) {
+                    String query = "INSERT INTO `penarikan`(`id_tarik`, `peruntukan`, `nominal`, `tgl_penarikan`) VALUES (?,?,?,NOW())";
+
+                    PreparedStatement prpStat = conn.prepareStatement(query);
+                    prpStat.setInt(1, 0);
+                    prpStat.setString(2, cmboPerihal.getSelectedItem().toString());
+                    prpStat.setInt(3, Integer.parseInt(txtNominal.getText()));
+
+                    prpStat.execute();
+                    JOptionPane.showMessageDialog(null, "Penarikan Berhasil");
+                } catch (Exception e) {
+                    System.err.print("Got an exception!");
+                    System.err.println(e.getMessage());
+                }
+            } catch (ClassNotFoundException e) {
                 System.err.print("Got an exception!");
                 System.err.println(e.getMessage());
             }
-        } catch (ClassNotFoundException e) {
-            System.err.print("Got an exception!");
-            System.err.println(e.getMessage());
-        }
-        
-        txtPerihal.setText("");
-        txtNominal.setText("");
-        
-        try {
-            Connection MySQL = Koneksi.Connect("kas_mhs");
-            ResultSet R = MySQL.createStatement().executeQuery("SELECT SUM(nominal) AS SALDO FROM saldo");
-            tblSaldo.setModel(DbUtils.resultSetToTableModel(R));
-        } catch (SQLException e) {
-            System.out.println("Failed To Load :" + e.toString());
 
-        }
+            cmboPerihal.setSelectedIndex(0);
+            txtNominal.setText("");
+
+            try {
+                Connection MySQL = Koneksi.Connect("kas_mhs");
+                ResultSet R = MySQL.createStatement().executeQuery("SELECT SUM(nominal) AS SALDO FROM saldo");
+                tblSaldo.setModel(DbUtils.resultSetToTableModel(R));
+            } catch (SQLException e) {
+                System.out.println("Failed To Load :" + e.toString());
+
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -189,10 +184,6 @@ public class Form_Penarikan_Uang extends javax.swing.JFrame {
         new Menu().setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void txtPerihalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPerihalActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPerihalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -214,7 +205,7 @@ public class Form_Penarikan_Uang extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Form_Penarikan_Uang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         //</editor-fold>
 
         /* Create and display the form */
@@ -224,6 +215,7 @@ public class Form_Penarikan_Uang extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cmboPerihal;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -234,6 +226,5 @@ public class Form_Penarikan_Uang extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblSaldo;
     private javax.swing.JTextField txtNominal;
-    private javax.swing.JTextField txtPerihal;
     // End of variables declaration//GEN-END:variables
 }
